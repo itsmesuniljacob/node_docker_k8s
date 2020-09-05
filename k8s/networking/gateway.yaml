@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: heroes-gw
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 443
+      name: https-443
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE # enables HTTPS on this port
+      credentialName: app-credential
+    hosts:
+    - "heroes.thelilcubs.com"

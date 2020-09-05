@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  generation: 1
+  labels:
+    app: threats
+  name: threats
+  namespace: power
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: threats
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: threats
+    spec:
+      containers:
+      - image: xylene1980/threats_app:latest
+        imagePullPolicy: Always
+        # ports: 
+        #   - containerPort: 8081
+        name: threats
+        resources: {}
+      imagePullSecrets:
+      - name: myregistrykey
+status:
+  availableReplicas: 1
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

@@ -1,0 +1,29 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: heroes-webapp
+  namespace: node
+spec:
+  hosts:      # which incoming host are we applying the proxy rules to???
+    - "heroes.thelilcubs.com"
+  gateways:
+    - heroes-gw
+  http:
+    - match:
+      - uri:  # IF
+          prefix: /heroes
+      - uri:
+          prefix: "/hero"
+      route: # THEN
+      - destination:
+          host: heroes
+    - match:
+      - uri: 
+          prefix: "/threats"
+      # rewrite:
+      #     uri: /threats
+      - uri: 
+          prefix: "/assignment"
+      route:
+      - destination:
+          host: threats.power.svc.cluster.local    
